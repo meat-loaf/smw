@@ -719,7 +719,7 @@ endif
 	; TODO wram mirror check
 	TYX
 	LDA !extra_bits,x
-	AND #$04
+	AND #$08
 	BNE .custom_offs
 	LDA !9E,x
 	TAX
