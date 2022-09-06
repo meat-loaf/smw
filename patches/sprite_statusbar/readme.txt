@@ -15,14 +15,25 @@ other things. It is meant as an example, not as the 'canonical' setup for this p
 The main patch to be patched to your SMW ROM is 'status.asm'.
 
 Notes:
-The included 'disable_irq.asm' completely disables the irq used by the status bar. It's interpreted
-from Kevin's toggleable version. You can use any patch to disable irq that you like, however, but
-this is here for completeness' sake. It only works on lorom: use another patch on SA1 to disable the
-status bar irq.
-By default, many of the tile position defines are relative to each other. This should make it quite
-easy to shift around the provided counters however you like.
-The hijack used on SA1 utilizes the OAM hijack provided by SA1 in v1.40 of the patch. I don't intend
-to support changes to the patch to work on any other version.
+* The included 'disable_irq_lorom.asm' completely disables the irq used by the status bar. It's interpreted
+  from Kevin's toggleable version. You can use any patch to disable irq that you like, however, but
+  this is here for completeness' sake. As the name implies, it only works on lorom: use another patch on
+  SA1 to disable the status bar irq.
+* By default, many of the tile position defines are relative to each other. This should make it quite
+  easy to shift around the provided counters however you like.
+  The hijack used on SA1 utilizes the OAM hijack provided by SA1 in v1.40 of the patch. I don't intend
+  to support changes to the patch to work on any other version.
+* When creating your own counters and such similar to what I have set up here, the main thing to note
+  that may not be immediately obvious is that the values in the status bar tilemap ram are expected to
+  be indexes into a table of tiles (in this case, the table named `.number_tilenums'), instead of the
+  tile number itself to draw (how it was with SMW's original setup). This makes it much easier to
+  shuffle around where the tiles are in your sprite files.
+  * For example, when drawing a '3', the original games code puts the value $03 to the relevant ram address.
+    (Example, $7E0F13 for the tens digit of the coin counter). The status bar code will load the value '3' from
+    this address, then use it as an index into the aforementioned table, loading that loaded value as the oam
+    tile to store.
+  * This is applied similarly for other non-number counter types, as well. See the `statusbar_tweaks.asm' file
+    for the default examples.
 
 Current limitations:
 * No setup to dynamically update the Mario/Luigi player name for the lives counter. It can be done
