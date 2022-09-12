@@ -458,6 +458,7 @@ endif
 	LDA.b #$04
 	ORA !extra_bits,x
 	STA !extra_bits,x
+	LDA !scr_ebits_ebytes
 .no_exbit:
 	BEQ .cont
 	INY
