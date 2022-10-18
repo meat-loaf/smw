@@ -1,0 +1,72 @@
+[{
+	"id":0,
+	"name":"Shy Guy (green)",
+	"desc": "A green shy guy that falls off ledges. It will kick shells if it encounters them.",
+	"category": "generic",
+	"custom": false,
+	"extra_bit": false,
+	"smap16":{
+		"tile":"561"
+	}
+},{
+	"id":1,
+	"name":"Shy Guy (red)",
+	"desc": "A red shy guy that stays on ledges. It will kick shells if it encounters them.",
+	"category": "generic",
+	"custom": false,
+	"extra_bit": false,
+	"smap16":{
+		"tile":"560"
+	}
+},{
+	"id":3,
+	"name":"Shy Guy (yellow)",
+	"desc": "A yellow shy guy that falls off ledges. It will kick shells if it encounters them and turn them into disco shells. It moves faster than the green variant.",
+	"category": "generic",
+	"custom": false,
+	"extra_bit": false,
+	"smap16":{
+		"tile":"563"
+	}
+},{
+	"id":2,
+	"name":"Shy Guy (blue)",
+	"desc": "A blue shy guy that stays on ledges. It will kick shells if it encounters them. It moves faster than the red variant.",
+	"category": "generic",
+	"custom": false,
+	"extra_bit": false,
+	"smap16":{
+		"tile":"562"
+	}
+},{
+	"id":"15",
+	"name":"Woozy Guy (dynamic)",
+	"desc":"A Woozy Guy from Yoshi's Island. He does somersaults towards Mario. Its color is based on its starting X position.",
+	"category": "dynamic",
+	"custom": true,
+	"extra_bit": false,
+	"back_color": "0",
+	"text_color": "FFFFFF",
+	"n_exbytes": 0,
+	"smap16":[{
+		"xmask":0,
+		"dat":{
+			"tile":"573"
+		}
+	},{
+		"xmask": 1,
+		"dat":{
+			"tile":"572"
+		}
+	},{
+		"xmask": 2,
+		"dat":{
+			"tile":"570"
+		}
+	},{
+		"xmask": 3,
+		"dat":{
+			"tile":"571"
+		}
+	}]
+}]

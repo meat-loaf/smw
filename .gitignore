@@ -6,3 +6,4 @@
 *.png
 Graphics
 ExGraphics
+__pycache__
