@@ -49,13 +49,13 @@ macro draw_timer(return)
 	%draw_static_tile(!timer_clock_xpos,!timer_clock_ypos,!clock_tile,\
 			!tile_noflip,$00,$00,$00)
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
-	%draw_digit_tile(!timer_100s_xpos,!timer_100s_ypos,!timer_hundreds,\
+	%draw_digit_tile(!timer_100s_xpos,!timer_100s_ypos,$0F25|!addr,\
 			!tile_noflip,$00,$00,$00)
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
-	%draw_digit_tile(!timer_tens_xpos,!timer_tens_ypos,!timer_tens,\
+	%draw_digit_tile(!timer_tens_xpos,!timer_tens_ypos,$0F26|!addr,\
 			!tile_noflip,$00,$00,$00)
 	%get_next_oam_tile(status_bar_oam_tiles, no_oam_left)
-	%draw_digit_tile(!timer_ones_xpos,!timer_ones_ypos,!timer_ones,\
+	%draw_digit_tile(!timer_ones_xpos,!timer_ones_ypos,$0F27|!addr,\
 			!tile_noflip,$00,$00,$00)
 	<return>
 endmacro

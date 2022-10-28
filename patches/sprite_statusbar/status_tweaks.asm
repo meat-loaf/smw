@@ -8,8 +8,6 @@ org $008E8A+$01|!bank
 ; replace leading zero in score with space
 org $008EE5+$01|!bank
 	db !blank_digit_ix
-org $008EE5+$01|!bank
-	db !blank_digit_ix
 
 ; replace leading zero in lives with space
 org $008F53+$01|!bank
