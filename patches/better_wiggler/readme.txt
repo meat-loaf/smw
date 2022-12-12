@@ -4,11 +4,6 @@ It:
   1) Rewrites the segment buffer handling to properly use
      a ring instead of an MVP shuffle, saving about
      800 cycles per on-screen wiggler every frame.
-     * This comes with the caveat that to implement the ring quickly
-       and easily, the buffer address must be aligned to a 7-bit
-       boundary. This is not a problem on SA1, but the buffer was moved
-       slightly in lorom. In practice, this shouldn't be a problem, but
-       do be aware of this.
   2) Allows an arbitrary number of wigglers to be on-screen
      at the same time, up to the entity limit (if you can
      find enough available ram, anyway)
@@ -39,9 +34,11 @@ out exactly how it works.
 
     There are a few defines that you should know about:
   * !wiggler_segment_buffer
-    * Address of the buffer for wiggler's segment positions. Should be 7-bit aligned
-      (that is, the lower 7 bits of its address should be clear).
-      * This is already the case on SA1, but it was moved on lorom to $7FA000
+    * Address of the buffer for wiggler's segment positions. If you wish
+      to use more than 4 wigglers, it may need to be moved (especially on SA1).
+      Each wiggler requires $80 (128) bytes. On non-sa1 it might be fine, if you're
+      not using any patches that use freeram starting at 7F9C7B (The wiggler buffer
+      location is right up next to the extra freeram in bank 7F)
   * !wiggler_segment_slots
     * an array which stores the sprite slots of active wigglers, 'reserving'
       a chunk of the segment buffer. This is to allow quickly finding which

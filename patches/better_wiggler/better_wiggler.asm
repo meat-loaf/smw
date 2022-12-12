@@ -79,7 +79,7 @@ else
 	!bank = $800000
 	!spl_255_disabled = !disable_255_sprites_per_lvl
 
-	!wiggler_segment_buffer = $7FA000
+	!wiggler_segment_buffer = $7F9A7B
 endif
 
 
@@ -202,7 +202,6 @@ wiggler_offscreen_invoc:
 .done:
 
 org $02F0DB|!bank
-assert !wiggler_segment_buffer&$7F == $00, "Wiggler segment buffer address must be 7-bit aligned."
 wiggler_update_segment_buffer:
 	LDA   !wiggler_segbuff_position,x
 	DEC
