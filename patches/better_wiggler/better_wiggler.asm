@@ -40,9 +40,8 @@
 ;       It must also be in the wram mirror. The default location is exactly 4 bytes.
 !nwigglers = 4
 
-; if you dont know what this is, don't go changing it.
-; it only matters on lorom anyway. set it to 1 if you
-; don't know what it but don't intend to use pixi
+; set to nonzero to use the game's original sprite load table address.
+; pixi and the sa1 patch move it by default.
 !disable_255_sprites_per_lvl = 0
 
 ; graphics stuff. remap if you like.
@@ -130,7 +129,7 @@ endmacro
 if not(!spl_255_disabled)
 	%define_sprite_table("sprite_load_table", $7FAF00, $418A00)
 else
-	%define_sprite_table("1938", $7FAF00, $418A00)
+	!sprite_load_table = $1938
 endif
 
 ; leave this
@@ -151,10 +150,8 @@ endif
 !wiggler_segment_slots    = $0DC3|!addr
 
 org $02EFEA|!bank
-wiggler_seg_off_lo:
-	db $00,$80,$00,$80
-wiggler_seg_off_hi:
-	db $00,$00,$01,$01
+padbyte $EA
+pad $02EFF2|!bank
 wiggler_init:
 	PHB
 	PHK
@@ -184,7 +181,6 @@ wiggler_segment_ptr_init:
 	ADC.w wiggler_seg_off_lo|!bank,y
 	STA.b !wiggler_segment_ptr+$0
 	LDA.b #!wiggler_segment_buffer>>8
-	CLC
 	ADC.w wiggler_seg_off_hi|!bank,y
 	STA.b !wiggler_segment_ptr+$1
 	LDA.b #!wiggler_segment_buffer>>16
@@ -239,12 +235,19 @@ wiggler_small_tile_xoffs:
 
 ; note: original graphics stuff start
 org $02F103|!bank
-	; pads the graphics routine; the assertion
-	; at the end needs to pass, there's more
-	; (of the original) code that follows it
-	; i'm not just going to branch to the
-	; original location, thats ridiculous
-	NOP #16
+; moved to allow room for expansion
+wiggler_seg_off_lo:
+	db $00,$80,$00,$80
+wiggler_seg_off_hi:
+	db $00,$00,$01,$01
+
+; pads the graphics routine; the assertion
+; at the end needs to pass, there's more
+; (of the original) code that follows it
+; i'm not just going to branch to the
+; original location, thats ridiculous
+	padbyte $EA
+	pad $02F113|!bank
 wiggler_segment_buff_offs:
 	db $00,$1E,$3E,$5E,$7E
 wiggler_segment_yoffs:
@@ -408,8 +411,7 @@ wiggler_init_find_segslot:
 if !spl_255_disabled
 	LDA.b #$00
 	LDY.w !161A,x
-	STA.w !14C8,x
-	STA.w !sprite_load_table,y
+	STA.w !sprite_status,x
 else
 	LDA.w !161A,x
 	TAX
@@ -417,6 +419,7 @@ else
 	STA.l !sprite_load_table,x
 	LDX.w $15E9|!addr
 endif
+	STZ.w !sprite_status,x
 	JML.l wiggler_init_seg_init_done|!bank
 .found:
 	LDA.w $15E9|!addr
